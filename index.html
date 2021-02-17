@@ -71,6 +71,7 @@
     var worker = new Worker('worker.js');
     worker.onmessage = function (event) {
       console.log(event.data);
+      print(event.data);
     }
     var ping = function() {
       worker.postMessage("ping");
@@ -80,7 +81,7 @@
         wallClock += 1;
         if(wallClock % 100 == 0){
             //fetchCircle();
-
+            
         }
         animFrame( mainloop );
     };
