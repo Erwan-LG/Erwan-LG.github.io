@@ -65,8 +65,9 @@
            
 
             worker.onmessage = function(e) {
-                result = e.data;
-                console.log(e.data);
+                result = e.data.Json();
+                x = result.x;
+                y = result.y;
                 console.log('Message received from worker');
             }
         }
