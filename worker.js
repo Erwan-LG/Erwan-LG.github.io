@@ -1,3 +1,5 @@
 onmessage = function(event) {
-    postMessage([getRandomInt(600),getRandomInt(600)]);
+    
+    //getRandomInt(600)
+    postMessage([{"data": [{"x":30},{"y":40}]}]);
 }
