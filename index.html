@@ -69,19 +69,23 @@
     }
 
     var worker = new Worker('worker.js');
-    worker.onmessage = function (event) {
-      console.log(event.data);
+    function StartWorker(){
+        worker.onmessage = function (event) {
+            console.log(event.data);
+        }
+        var ping = function() {
+            worker.postMessage("ping");
+        }
+        
     }
-    var ping ;
+    
 	
 	function mainloop(){
         wallClock += 1;
         if(wallClock % 100 == 0){
             fetchCircle();
-            ping = function() {
-                worker.postMessage("ping");
-            }
-            console.log(worker.onmessage);
+            StartWorker();
+            console.log("tst");
         }
         animFrame( mainloop );
     };
