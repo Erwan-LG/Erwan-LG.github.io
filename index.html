@@ -53,28 +53,25 @@
 	}
 
 
-    function fetchCircle(){
-        fetch('https://stwom.herokuapp.com/590',{
-            method: 'get'
-        })
-        .then(result=> result.json())
-        .then((result)=>{
-            console.log(result);
-            context.beginPath();
-            context.arc(result.x, result.y, 10,  0, 2 * Math.PI);
-            context.fillStyle = "#FF0000";
-            context.fill();
-        })
-        .catch(console.error)
-    }
+
 
     var worker = new Worker('worker.js');
     function StartWorker(){
-        worker.onmessage = function (event) {
-            console.log(event.data);
-        }
-        var ping = function() {
-            worker.postMessage("ping");
+        if (window.Worker) {
+            const myWorker = new Worker("worker.js");
+
+            first.onchange = function() {
+                myWorker.postMessage([first.value, second.value]);
+                console.log('Message posted to worker');
+            }
+
+            myWorker.onmessage = function(e) {
+                result.textContent = e.data;
+                x = e.data[0];
+                y = e.data[1];
+                console.log('Message received from worker');
+            }
+            
         }
         
     }
@@ -83,9 +80,8 @@
 	function mainloop(){
         wallClock += 1;
         if(wallClock % 100 == 0){
-            fetchCircle();
             StartWorker();
-            console.log("tst");
+            draw();
         }
         animFrame( mainloop );
     };
