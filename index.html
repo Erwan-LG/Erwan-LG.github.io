@@ -55,19 +55,18 @@
 
 
 
-    var worker = new Worker('worker.js');
+    
     function StartWorker(){
         if (window.Worker) {
+            var worker = new Worker('worker.js');
 
             worker.onchange = function() {
-                worker.postMessage([first.value, second.value]);
+                worker.postMessage('ping');
                 console.log('Message posted to worker');
             }
 
             worker.onmessage = function(e) {
                 result.textContent = e.data;
-                x = e.data[0];
-                y = e.data[1];
                 console.log('Message received from worker');
             }
             
