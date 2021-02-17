@@ -1,1 +1,92 @@
-Hello World
+<!doctype html>
+<html>
+<head>
+<title>classical game loop</title>
+<style>
+    #gameField{
+        background-color: grey;
+    }
+</style>
+</head>
+<body>
+    <canvas id="gameField" width="600" height="600"></canvas>
+
+</body>
+<script>
+	
+	//requestAnimationFrame method conveniently replace Setinterval for all animation purpose. It is optimized for 30frame per seconds rendering.
+    const animFrame = window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            window.oRequestAnimationFrame      ||
+            window.msRequestAnimationFrame     ||
+            null ;
+
+
+
+
+	
+	const canvas = document.getElementById("gameField");
+	canvas.width = 600;
+	canvas.height = 600;
+	const context = canvas.getContext("2d");
+
+	let wallClock = 0;
+	let x = 0;
+    let y = 0;
+
+    var xmlhttp;
+
+
+
+
+
+
+	
+    function draw(){
+        context.beginPath();
+        context.arc(x, y, 10, 0, 2 * Math.PI);
+		//context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "#FF0000";
+        context.fill();
+        context.closePath(); 
+	}
+
+
+    function fetchCircle(){
+        fetch('https://stwom.herokuapp.com/590',{
+            method: 'get'
+        })
+        .then(result=> result.json())
+        .then((result)=>{
+            console.log(result);
+            context.beginPath();
+            context.arc(result.x, result.y, 10,  0, 2 * Math.PI);
+            context.fillStyle = "#FF0000";
+            context.fill();
+        })
+        .catch(console.error)
+    }
+
+    var worker = new Worker('worker.js');
+    worker.onmessage = function (event) {
+      console.log(event.data);
+    }
+    var ping = function() {
+      worker.postMessage("ping");
+    }
+	
+	function mainloop(){
+        wallClock += 1;
+        if(wallClock % 100 == 0){
+            //fetchCircle();
+
+        }
+        animFrame( mainloop );
+    };
+    
+   
+
+    animFrame( mainloop );
+</script>
+</html>
