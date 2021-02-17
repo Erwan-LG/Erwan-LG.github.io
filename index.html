@@ -58,14 +58,13 @@
     var worker = new Worker('worker.js');
     function StartWorker(){
         if (window.Worker) {
-            const myWorker = new Worker("worker.js");
 
-            first.onchange = function() {
-                myWorker.postMessage([first.value, second.value]);
+            worker.onchange = function() {
+                worker.postMessage([first.value, second.value]);
                 console.log('Message posted to worker');
             }
 
-            myWorker.onmessage = function(e) {
+            worker.onmessage = function(e) {
                 result.textContent = e.data;
                 x = e.data[0];
                 y = e.data[1];
