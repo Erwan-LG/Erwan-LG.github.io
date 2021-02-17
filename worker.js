@@ -1,5 +1,5 @@
 onmessage = function(event) {
     
     //getRandomInt(600)
-    postMessage([30,40]);
+    postMessage([getRandomInt(600),getRandomInt(600)]);
 }
