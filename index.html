@@ -60,10 +60,9 @@
         if (window.Worker) {
             var worker = new Worker('worker.js');
 
-            worker.onchange = function() {
-                worker.postMessage('ping');
-                console.log('Message posted to worker');
-            }
+            worker.postMessage('ping');
+            console.log('Message posted to worker');
+           
 
             worker.onmessage = function(e) {
                 result = e.data;
